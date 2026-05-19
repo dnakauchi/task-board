@@ -66,7 +66,60 @@
 
 ---
 
+## デプロイ先
+
+- **本番URL**: https://dnakauchi.github.io/task-board/
+- **デプロイ方式**: `main` ブランチへのプッシュで GitHub Actions が自動ビルド＆デプロイ
+- **設定ファイル**: `.github/workflows/deploy.yml`
+
+---
+
+## 技術スタック
+
+| カテゴリ | 技術 |
+|----------|------|
+| UIライブラリ | React 18 |
+| ビルドツール | Vite 5 |
+| スタイリング | CSS Modules なし / グローバルCSS（BEM命名） |
+| 状態管理 | React `useState` （外部ライブラリなし） |
+| 永続化 | `localStorage` |
+| デプロイ | GitHub Pages + GitHub Actions |
+
+---
+
+## コンポーネント設計
+
+### 命名規約
+
+- ファイル名・コンポーネント名ともに **PascalCase**（例: `TaskItem.jsx`）
+- CSS クラス名は **BEM** に準じた命名（例: `task-item__text`, `task-item--completed`）
+
+### コンポーネント構成
+
+```
+src/
+├── App.jsx                   # ルートコンポーネント。状態管理とlocalStorage連携
+└── components/
+    ├── TaskInput.jsx         # テキスト入力と追加ボタン
+    ├── TaskList.jsx          # タスク一覧。空状態の表示も担当
+    └── TaskItem.jsx          # 個別タスク。チェックボックス・テキスト・削除ボタン
+```
+
+### データ構造
+
+```js
+// tasks: Task[]
+{
+  id: string,        // crypto.randomUUID()
+  text: string,
+  completed: boolean
+}
+```
+
+---
+
 ## 開発環境
 
 - OS: Windows 11
 - Shell: PowerShell / Bash
+- ローカル開発サーバー: `npm run dev` → http://localhost:5173
